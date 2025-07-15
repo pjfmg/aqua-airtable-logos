@@ -1,9 +1,9 @@
 name: Atualizar Logos no Airtable
 
 on:
-  workflow_dispatch:      # permite execução manual via botão no GitHub
+  workflow_dispatch:
   schedule:
-    - cron: '0 8 * * *'   # executa diariamente às 08:00 UTC
+    - cron: '0 8 * * *'   # todos os dias às 08h UTC
 
 jobs:
   update-logos:
