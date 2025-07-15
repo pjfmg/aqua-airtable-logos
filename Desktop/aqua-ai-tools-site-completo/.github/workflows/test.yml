@@ -1,0 +1,11 @@
+name: Teste de Ativação
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo Teste
+        run: echo "GitHub Actions ativado com sucesso!"
