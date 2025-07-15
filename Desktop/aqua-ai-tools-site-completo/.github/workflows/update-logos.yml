@@ -1,0 +1,38 @@
+name: Atualizar Logos Airtable
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # 09:00 GMT = 08:00h nos Açores
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositório
+        uses: actions/checkout@v3
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Executar atualização de logos
+        env:
+          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
+          AIRTABLE_TABLE_NAME: ${{ secrets.AIRTABLE_TABLE_NAME }}
+        run: node scripts/update_airtable_logos.js
+
+      - name: Commit de logos.json (opcional)
+        run: |
+          git config --global user.email "github@actions.com"
+          git config --global user.name "GitHub Actions"
+          git add logos.json
+          git commit -m "Atualização diária de logos"
+          git push
+        continue-on-error: true
