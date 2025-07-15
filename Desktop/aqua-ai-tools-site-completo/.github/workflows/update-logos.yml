@@ -1,15 +1,19 @@
 name: Atualizar Logos no Airtable
 
 on:
-  workflow_dispatch: {}  # permite execução manual via GitHub
+  push:
+  workflow_dispatch: {}
   schedule:
-    - cron: '0 8 * * *'   # executa diariamente às 08:00 UTC
+    - cron: '0 8 * * *'
 
 jobs:
   update-logos:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Mostrar mensagem
+        run: echo "Ativar GitHub Actions — Trigger manual, push ou cron"
+
       - name: 🧾 Clonar repositório
         uses: actions/checkout@v3
 
