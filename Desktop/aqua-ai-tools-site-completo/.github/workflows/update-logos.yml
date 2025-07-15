@@ -1,9 +1,9 @@
 name: Atualizar Logos no Airtable
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: {}  # permite execução manual via GitHub
   schedule:
-    - cron: '0 8 * * *'   # Executa todos os dias às 08h UTC
+    - cron: '0 8 * * *'   # executa diariamente às 08:00 UTC
 
 jobs:
   update-logos:
@@ -29,4 +29,3 @@ jobs:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
           AIRTABLE_TABLE_NAME: ${{ secrets.AIRTABLE_TABLE_NAME }}
-          
