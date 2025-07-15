@@ -1,38 +1,31 @@
-name: Atualizar Logos Airtable
+name: Atualizar Logos no Airtable
 
 on:
+  workflow_dispatch:      # permite execução manual via botão no GitHub
   schedule:
-    - cron: '0 9 * * *' # 09:00 GMT = 08:00h nos Açores
-  workflow_dispatch:
+    - cron: '0 8 * * *'   # executa diariamente às 08:00 UTC
 
 jobs:
-  update:
+  update-logos:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Clonar repositório
+      - name: 🧾 Clonar repositório
         uses: actions/checkout@v3
 
-      - name: Instalar Node.js
+      - name: 🟢 Instalar Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Instalar dependências
+      - name: 📦 Instalar dependências
         run: npm install
+        working-directory: scripts
 
-      - name: Executar atualização de logos
+      - name: 🚀 Executar script de atualização
+        run: node update_airtable_logos.js
+        working-directory: scripts
         env:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
           AIRTABLE_BASE_ID: ${{ secrets.AIRTABLE_BASE_ID }}
           AIRTABLE_TABLE_NAME: ${{ secrets.AIRTABLE_TABLE_NAME }}
-        run: node scripts/update_airtable_logos.js
-
-      - name: Commit de logos.json (opcional)
-        run: |
-          git config --global user.email "github@actions.com"
-          git config --global user.name "GitHub Actions"
-          git add logos.json
-          git commit -m "Atualização diária de logos"
-          git push
-        continue-on-error: true
